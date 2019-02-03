@@ -1,0 +1,95 @@
+From e70e9ae74f5812d0f1f6c21f46a911d36852b9de Mon Sep 17 00:00:00 2001
+From: Dusan Klinec <dusan.klinec@gmail.com>
+Date: Sun, 3 Feb 2019 12:55:25 +0100
+Subject: [PATCH] patched: classpoly - env vars
+
+---
+ src/classpoly_v1.0.2/crt.c      |  2 +-
+ src/classpoly_v1.0.2/crt.h      | 12 ++++++++----
+ src/classpoly_v1.0.2/phi_poly.c |  2 +-
+ src/classpoly_v1.0.2/phi_poly.h | 12 ++++++++----
+ 4 files changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/src/classpoly_v1.0.2/crt.c b/src/classpoly_v1.0.2/crt.c
+index 389f35a..ca6b884 100644
+--- a/src/classpoly_v1.0.2/crt.c
++++ b/src/classpoly_v1.0.2/crt.c
+@@ -15,7 +15,7 @@
+     See LICENSE file for license details.
+ */
+ 
+-char _crt_dir_str[1024];
++char _crt_dir_str[4096];
+ 
+ #define CRT_FILE_FORMAT_STRING		"%s/CRT_%lu_%lu_%d.crt"
+ 
+diff --git a/src/classpoly_v1.0.2/crt.h b/src/classpoly_v1.0.2/crt.h
+index 68259de..a153439 100644
+--- a/src/classpoly_v1.0.2/crt.h
++++ b/src/classpoly_v1.0.2/crt.h
+@@ -12,14 +12,18 @@ extern "C" {
+ 
+ #define CRT_DIR					crt_dir()		
+ #define CRT_DIR_NAME				"temp"
+-extern char _crt_dir_str[1024];
++extern char _crt_dir_str[4096];
+ static inline char *crt_dir (void)
+ {
+ 	char *s;
+ 	if ( _crt_dir_str[0] ) return _crt_dir_str;
+-	s = getenv("HOME");
+-	if ( s ) sprintf (_crt_dir_str, "%s/%s", s, CRT_DIR_NAME);
+-	else strcpy (_crt_dir_str, CRT_DIR_NAME);
++	s = getenv("CLASSPOLY_TEMP");
++	if ( s ) snprintf (_crt_dir_str, 4096, "%s", s);
++        else {	
++	  s = getenv("HOME");
++	  if ( s ) snprintf (_crt_dir_str, 4096, "%s/%s", s, CRT_DIR_NAME);
++	  else strcpy (_crt_dir_str, CRT_DIR_NAME);
++	}  
+ 	return _crt_dir_str;
+ }
+ 
+diff --git a/src/classpoly_v1.0.2/phi_poly.c b/src/classpoly_v1.0.2/phi_poly.c
+index cc1fc5d..f227387 100644
+--- a/src/classpoly_v1.0.2/phi_poly.c
++++ b/src/classpoly_v1.0.2/phi_poly.c
+@@ -35,7 +35,7 @@
+ 
+ #define PHI_SMALL_M		31
+ 
+-char _phi_dir_str[1024];
++char _phi_dir_str[4096];
+ 
+ /*
+ 	A nonzero table entry m in row ell and column h indicates that if ell* is greater than m than we should just use Phi_ell (i.e. find roots)
+diff --git a/src/classpoly_v1.0.2/phi_poly.h b/src/classpoly_v1.0.2/phi_poly.h
+index 232fb9b..c1aa0cc 100644
+--- a/src/classpoly_v1.0.2/phi_poly.h
++++ b/src/classpoly_v1.0.2/phi_poly.h
+@@ -37,14 +37,18 @@
+ // directory for modulary polynomial files phi_*.txt
+ #define PHI_DIR				phi_dir()
+ #define PHI_DIR_NAME			"phi_files"
+-extern char _phi_dir_str[1024];
++extern char _phi_dir_str[4096];
+ static inline char *phi_dir (void)
+ {
+ 	char *s;
+ 	if ( _phi_dir_str[0] ) return _phi_dir_str;
+-	s = getenv("HOME");
+-	if ( s ) sprintf (_phi_dir_str, "%s/%s", s, PHI_DIR_NAME);
+-	else strcpy (_phi_dir_str, PHI_DIR_NAME);
++	s = getenv("CLASSPOLY_PHI_FILES");
++	if ( s ) snprintf(_phi_dir_str, 4096, "%s", s);
++	else {
++	    s = getenv("HOME");
++	    if ( s ) sprintf (_phi_dir_str, "%s/%s", s, PHI_DIR_NAME);
++	    else strcpy (_phi_dir_str, PHI_DIR_NAME);
++	}    
+ 	return _phi_dir_str;
+ }
+ 
+-- 
+2.18.0
+
