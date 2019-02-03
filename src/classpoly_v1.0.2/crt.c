@@ -15,7 +15,7 @@
     See LICENSE file for license details.
 */
 
-char _crt_dir_str[1024];
+char _crt_dir_str[4096];
 
 #define CRT_FILE_FORMAT_STRING		"%s/CRT_%lu_%lu_%d.crt"
 

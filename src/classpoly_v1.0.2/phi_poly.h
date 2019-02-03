@@ -37,14 +37,18 @@
 // directory for modulary polynomial files phi_*.txt
 #define PHI_DIR				phi_dir()
 #define PHI_DIR_NAME			"phi_files"
-extern char _phi_dir_str[1024];
+extern char _phi_dir_str[4096];
 static inline char *phi_dir (void)
 {
 	char *s;
 	if ( _phi_dir_str[0] ) return _phi_dir_str;
-	s = getenv("HOME");
-	if ( s ) sprintf (_phi_dir_str, "%s/%s", s, PHI_DIR_NAME);
-	else strcpy (_phi_dir_str, PHI_DIR_NAME);
+	s = getenv("CLASSPOLY_PHI_FILES");
+	if ( s ) snprintf(_phi_dir_str, 4096, "%s", s);
+	else {
+	    s = getenv("HOME");
+	    if ( s ) sprintf (_phi_dir_str, "%s/%s", s, PHI_DIR_NAME);
+	    else strcpy (_phi_dir_str, PHI_DIR_NAME);
+	}    
 	return _phi_dir_str;
 }
 

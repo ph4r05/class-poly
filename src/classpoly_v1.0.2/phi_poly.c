@@ -35,7 +35,7 @@
 
 #define PHI_SMALL_M		31
 
-char _phi_dir_str[1024];
+char _phi_dir_str[4096];
 
 /*
 	A nonzero table entry m in row ell and column h indicates that if ell* is greater than m than we should just use Phi_ell (i.e. find roots)
