@@ -17,8 +17,6 @@ apt-get --no-install-recommends --yes install \
         g++ \
         make \
         pkg-config \
-        graphviz \
-        doxygen \
         git \
         curl \
         libtool-bin \
