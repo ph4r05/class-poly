@@ -37,6 +37,15 @@
 #define HEIGHT_MARGIN		256
 #define MAX_SKIP_COUNT	(HEIGHT_MARGIN/64)
 
+static void close_file(FILE *fp){
+	if (fp != stdout){
+		fclose(fp);
+	}
+}
+
+static FILE* open_file(char *filename){
+	return filename ? fopen (filename, "w") : stdout;
+}
 
 int compute_classpoly (long D, int inv, mpz_t P, char *filename)
 {
@@ -56,18 +65,23 @@ int compute_classpoly (long D, int inv, mpz_t P, char *filename)
 	int  crt_pcnt, p1, p2;
 	int H_d, ell0, N, classno, skip_count;
 	register int i;
-	
+	char *envvar;
+	int to_stdout=0;
+
+	envvar = getenv("CLASSPOLY_STDOUT");
+	if ( envvar ) to_stdout = atoi(envvar);
+
 	if ( P && ! mpz_sgn(P) ) P = 0;
-	if ( ! filename) { filename = buf;  sprintf(filename, "H_%ld.txt", -D); }
+	if ( ! filename && !to_stdout) { filename = buf;  sprintf(filename, "H_%ld.txt", -D); }
 	
 	if ( D >= -4 ) {
 		if ( inv || P ) { err_printf ("D must be less than -4 unless inv=0 and P=0\n"); return 0; }
-		fp = fopen (filename, "w");
+		fp = open_file (filename);
 		if ( ! fp ) { err_printf("Unable to create file %s\n", filename); return 0; }
 		fprintf (fp, "I=0\nD=%ld\n", D);
 		fprintf (fp, "%ld*X^0\n", (D==-3?0L:-1728L));
 		fprintf (fp, "1*X^1\n");
-		fclose (fp);
+		close_file (fp);
 		out_printf ("Class polynomial for D=%ld written to %s\n", D,  filename);
 		return 1;
 	}
@@ -180,10 +194,10 @@ int compute_classpoly (long D, int inv, mpz_t P, char *filename)
 	end = clock();
 	info_printf ("Completed main loop in %ld msecs\n", delta_msecs(start,end));
 
-	fp = fopen (filename, "w");
+	fp = open_file (filename);
 	if ( ! fp ) { err_printf ("Error opening file output file %s\n", filename); abort(); }
-	if ( ! classpoly_crt_finish (crt, &outbits, &cbits, fp) ) { err_printf("call to classpoly_crt_finish failed!"); fclose(fp); remove (filename); abort(); }
-	fclose (fp);
+	if ( ! classpoly_crt_finish (crt, &outbits, &cbits, fp) ) { err_printf("call to classpoly_crt_finish failed!"); close_file(fp); remove (filename); abort(); }
+	close_file (fp);
 	end = clock();
 	if ( P ) {
 		out_printf ("Class polynomial for inv=%d, D=%ld reduced mod P (%ld bits) written to %s, degree %d (%.1fs)\n", inv, D, mpz_sizeinbase(P,2), filename, H_d, (double)delta_msecs(begin,end)/1000.0);

@@ -38,7 +38,7 @@
 
 int ecurve_test_order2 (ppf_t n[2], ff_t f[4]);	// not defined in ecurve.h
 
-char _H_dir_str[1024];
+char _H_dir_str[4096];
 
 #define BUFSIZE	65536
 

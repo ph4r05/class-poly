@@ -32,7 +32,7 @@
 // Default directory for class polynomial files.  Default filename is printf("H_%d.txt", -D).
 #define H_DIR					H_dir()		
 #define H_DIR_NAME			"H_files"
-extern char _H_dir_str[1024];
+extern char _H_dir_str[4096];
 static inline char *H_dir (void)
 {
 	char *s;
