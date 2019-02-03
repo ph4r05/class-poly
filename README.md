@@ -7,6 +7,27 @@ Sources:
 - https://arxiv.org/pdf/0903.2785.pdf
 - https://math.mit.edu/~drew/
 
+## Contents
+
+This repository contains the following libraries:
+
+- zn_poly-0.9  https://web.maths.unsw.edu.au/~davidharvey/code/zn_poly/releases/zn_poly-0.9.tar.gz
+- ff_poly_big_v1.2.7  https://math.mit.edu/~drew/ff_poly_big_v1.2.7.tar
+- classpoly_v1.0.2  https://math.mit.edu/~drew/classpoly_v1.0.2.tar
+
+Original versions are in the branch `original`. Master contains slightly modified version.
+
+
+## Modifications
+
+The following modifications has been made:
+
+- Logging to stderr (so output can be used for classpoly output)
+- `CLASSPOLY_TEMP` defines the temporary directory to use. If undefined, goes by default to `$HOME/temp`
+- `CLASSPOLY_PHI_FILES` defines directory with the PHI data files (downloaded from [SmallModPolys]). If undefined, default is `$HOME/phi_files`
+- `CLASSPOLY_STDOUT=1` means the classpoly outputs the resulting polynomial to stdout instead of writing to the `$PWD/H_$D.txt`
+
+
 ## Docker build
 
 ```bash
@@ -17,7 +38,9 @@ docker run -i -t classpoly
 As described in the classpoly readme, you need to fetch polynomials from https://math.mit.edu/~drew/SmallModPolys
 and extract it to $HOME/phi_files according to selected invariant (0=Hilbert class, `phi_j.tar`)
 
-## Build
+## Build from sources
+
+For build form the original sources:
 
 ```bash
 apt-get --no-install-recommends --yes install \
@@ -63,3 +86,5 @@ make
 mkdir $HOME/temp
 ```
 
+
+[SmallModPolys]: https://math.mit.edu/~drew/SmallModPolys
