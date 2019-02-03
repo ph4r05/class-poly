@@ -328,7 +328,7 @@ printf ("   FILTER: ave cnt = %7ld, ave time %5.1f msecs, ratio %f (vs %f)\n", t
 
 	}
 	mem_free(split_primes);
-	if ( dbg_level > 0 ) { puts("Torsion:");   for ( i = 0 ; i < 40 ; i++ ) if ( torcnts[i] ) printf ("    %ld (%.3f)", i, (double)torcnts[i]/n); puts(""); }
+	if ( dbg_level > 0 ) { info_printf("Torsion:\n");   for ( i = 0 ; i < 40 ; i++ ) if ( torcnts[i] ) info_printf ("    %ld (%.3f)", i, (double)torcnts[i]/n); info_printf("\n"); }
 //dbg_printf ("%d primes, %f bits, maxp = %ld, maxv = %ld\n", i, pbits, p, v);
 	return n;
 }

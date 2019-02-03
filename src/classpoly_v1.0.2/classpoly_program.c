@@ -35,7 +35,7 @@ int main (int argc, char *argv[])
 	char *filename;
 	int picked;
 
-	if ( argc < 2 ) { printf ("classpoly D [inv P filename verbosity]\n"); printf ("Version %s (ff_poly version %s)\n", CLASSPOLY_VERSION_STRING, FF_POLY_VERSION_STRING); return 0; }
+	if ( argc < 2 ) { fprintf (stderr, "classpoly D [inv P filename verbosity]\n"); fprintf (stderr, "Version %s (ff_poly version %s)\n", CLASSPOLY_VERSION_STRING, FF_POLY_VERSION_STRING); return 0; }
 
 	_cstd_seed = 42;
 	

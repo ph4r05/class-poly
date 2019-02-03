@@ -42,17 +42,17 @@ int dbg_level;		// global shared variable to set debug/error reporting level
 */
 
 #define dbg_setlevel(i)		(dbg_level = (i))
-#define dbg_printf			if ( dbg_level >= DEBUG_LEVEL ) printf 
-#define info_printf			if ( dbg_level >= INFO_LEVEL ) printf
-#define warn_printf			if ( dbg_level >= WARN_LEVEL ) printf
-#define err_printf			if ( dbg_level >= ERROR_LEVEL ) printf
-#define out_printf			if ( dbg_level >= OUTPUT_LEVEL ) printf
+#define dbg_printf(...)			if ( dbg_level >= DEBUG_LEVEL ) fprintf (stderr, __VA_ARGS__)
+#define info_printf(...)		if ( dbg_level >= INFO_LEVEL ) fprintf (stderr, __VA_ARGS__)
+#define warn_printf(...)	  if ( dbg_level >= WARN_LEVEL ) fprintf (stderr, __VA_ARGS__)
+#define err_printf(...)			if ( dbg_level >= ERROR_LEVEL ) fprintf (stderr, __VA_ARGS__)
+#define out_printf(...)			if ( dbg_level >= OUTPUT_LEVEL ) fprintf (stderr, __VA_ARGS__)
 
-#define gmp_dbg_printf		if ( dbg_level >= DEBUG_LEVEL ) gmp_printf
-#define gmp_warn_printf		if ( dbg_level >= WARN_LEVEL ) gmp_printf
-#define gmp_info_printf		if ( dbg_level >= INFO_LEVEL ) gmp_printf
-#define gmp_err_printf		if ( dbg_level >= ERROR_LEVEL ) gmp_printf
-#define gmp_out_printf		if ( dbg_level >= OUTPUT_LEVEL ) gmp_printf
+#define gmp_dbg_printf(...)		  if ( dbg_level >= DEBUG_LEVEL ) gmp_fprintf(stderr, __VA_ARGS__)
+#define gmp_warn_printf(...)		if ( dbg_level >= WARN_LEVEL ) gmp_fprintf(stderr, __VA_ARGS__)
+#define gmp_info_printf(...)		if ( dbg_level >= INFO_LEVEL ) gmp_fprintf(stderr, __VA_ARGS__)
+#define gmp_err_printf(...)		  if ( dbg_level >= ERROR_LEVEL ) gmp_fprintf(stderr, __VA_ARGS__)
+#define gmp_out_printf(...)		  if ( dbg_level >= OUTPUT_LEVEL ) gmp_fprintf(stderr, __VA_ARGS__)
 
 #define delta_msecs(s,t)		(1000UL*(t-s)/CLOCKS_PER_SEC)
 #define delta_nsecs(s,t)		(1000000000UL*(t-s)/CLOCKS_PER_SEC)			// assumes 64 bit UL
