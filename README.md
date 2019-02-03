@@ -7,8 +7,17 @@ Sources:
 - https://arxiv.org/pdf/0903.2785.pdf
 - https://math.mit.edu/~drew/
 
+## Docker build
 
-## Installation
+```bash
+docker build -t="classpoly" .
+docker run -i -t classpoly
+```
+
+As described in the classpoly readme, you need to fetch polynomials from https://math.mit.edu/~drew/SmallModPolys
+and extract it to $HOME/phi_files according to selected invariant (0=Hilbert class, `phi_j.tar`)
+
+## Build
 
 ```bash
 apt-get --no-install-recommends --yes install \
@@ -27,7 +36,7 @@ apt-get --no-install-recommends --yes install \
         gperf \
         unzip \
         rsync \
-	python \
+	    python \
         libntl-dev \
         libgmp-dev 
 
@@ -44,6 +53,7 @@ tar -xvf ff_poly_big_v1.2.7.tar
 cd ff_poly_big_v1.2.7
 make && make install
 cp *.h /usr/local/include/ff_poly/
+cp ntutil.h /usr/local/include/
 cd ..
 
 tar -xvf classpoly_v1.0.2.tar
