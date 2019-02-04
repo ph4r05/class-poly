@@ -26,6 +26,7 @@ The following modifications has been made:
 - `CLASSPOLY_TEMP` defines the temporary directory to use. If undefined, goes by default to `$HOME/temp`
 - `CLASSPOLY_PHI_FILES` defines directory with the PHI data files (downloaded from [SmallModPolys]). If undefined, default is `$HOME/phi_files`
 - `CLASSPOLY_STDOUT=1` means the classpoly outputs the resulting polynomial to stdout instead of writing to the `$PWD/H_$D.txt`
+- Filename `-` means stdout
 
 
 ## Docker build
@@ -62,25 +63,23 @@ D=-19
 For build form the original sources:
 
 ```bash
-apt-get --no-install-recommends --yes install \
-        ca-certificates \
-        cmake \
-        g++ \
-        make \
-        pkg-config \
-        git \
-        curl \
-        libtool-bin \
+sudo apt-get install \
         autoconf \
         automake \
         bzip2 \
-        xsltproc \
-        gperf \
-        unzip \
-        rsync \
-	    python \
+        ca-certificates \
+        curl \
+        g++ \
+        git \
+        libgmp-dev \
         libntl-dev \
-        libgmp-dev 
+        libtool-bin \
+        make \
+        pkg-config \
+        python \
+        rsync \
+        unzip \
+        wget
 
 cd src/
 
