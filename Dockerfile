@@ -1,9 +1,14 @@
-# Multistage docker build, requires docker 17.05
+#   Classpoly Docker file
+# -----------------------------------------------------------------------------
+# Creates compilation image, i.e. you can modify the built sources.
+# However, binaries are also compiled during image creation
+# thus available in the image.
 
 # Base image is an argument - debian or ubuntu.
 ARG BASE_IMAGE=debian:latest
 
 # Builder stage
+# Multistage docker build, requires docker 17.05
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 # https://docs.docker.com/engine/reference/builder/
 # https://medium.com/@tonistiigi/advanced-multi-stage-build-patterns-6f741b852fae
@@ -12,25 +17,22 @@ FROM ${BASE_IMAGE} AS base
 RUN set -ex && \
     apt-get update && \
     apt-get --no-install-recommends --yes install \
-        ca-certificates \
-        cmake \
-        g++ \
-        make \
-        pkg-config \
-        git \
-        curl \
-        libtool-bin \
         autoconf \
         automake \
         bzip2 \
-        xsltproc \
-        gperf \
-        unzip \
-        rsync \
-        python \
-        wget \
-        libntl-dev \
+        ca-certificates \
+        curl \
+        g++ \
+        git \
         libgmp-dev \
+        libntl-dev \
+        libtool-bin \
+        make \
+        pkg-config \
+        python \
+        rsync \
+        unzip \
+        wget \
     && rm -rf /var/lib/apt/lists/*
 
 
