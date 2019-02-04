@@ -44,7 +44,7 @@ static void close_file(FILE *fp){
 }
 
 static FILE* open_file(char *filename){
-	return filename ? fopen (filename, "w") : stdout;
+	return filename && strcmp(filename, "-") != 0 ? fopen (filename, "w") : stdout;
 }
 
 int compute_classpoly (long D, int inv, mpz_t P, char *filename)
