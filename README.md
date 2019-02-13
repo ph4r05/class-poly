@@ -58,6 +58,12 @@ D=-19
 1*X^1
 ```
 
+Recompiling, or cache busting:
+
+```bash
+$ docker build -t="classpoly" --build-arg DIR_BUSTER=2.
+```
+
 ## Build from sources
 
 For build form the original sources:
